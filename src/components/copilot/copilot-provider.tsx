@@ -315,6 +315,7 @@ export function CopilotProvider({
       const message: ChatMessage = {
         id: `msg-collab-${Date.now()}`,
         role: "assistant",
+        kind: "ack",
         content,
         createdAt: new Date().toISOString(),
       };
@@ -379,7 +380,8 @@ export function CopilotProvider({
       const userMessage: ChatMessage = {
         id: `msg-opinion-${Date.now()}`,
         role: "user",
-        content: `Opinion: ${trimmed}`,
+        kind: "opinion",
+        content: trimmed,
         createdAt: new Date().toISOString(),
       };
       updateActiveMessages((prev) => [...prev, userMessage]);
@@ -396,7 +398,8 @@ export function CopilotProvider({
       const userMessage: ChatMessage = {
         id: `msg-support-${Date.now()}`,
         role: "user",
-        content: `Support question: ${trimmed}`,
+        kind: "support",
+        content: trimmed,
         createdAt: new Date().toISOString(),
       };
       updateActiveMessages((prev) => [...prev, userMessage]);

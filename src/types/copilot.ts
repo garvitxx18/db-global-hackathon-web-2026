@@ -49,12 +49,15 @@ export type ChatMessage =
       id: string;
       role: "user";
       content: string;
+      /** Distinguishes collaboration notes from normal chat prompts. */
+      kind?: "message" | "opinion" | "support";
       createdAt: string;
     }
   | {
       id: string;
       role: "assistant";
       content?: string;
+      kind?: "message" | "ack";
       analysis?: import("./incidents").IncidentAnalysis;
       affectedFunds?: import("./incidents").AffectedFund[];
       sources?: Array<{

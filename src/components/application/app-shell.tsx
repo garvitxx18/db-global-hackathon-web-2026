@@ -8,6 +8,7 @@ import {
   PROCESSING_DATE,
 } from "@/lib/constants";
 import { IncidentStrip } from "@/components/application/incident-strip";
+import { PcfOperationsPanel } from "@/components/application/pcf-operations-panel";
 import { PublishingRunsTable } from "@/components/application/publishing-runs-table";
 import { Sidebar } from "@/components/application/sidebar";
 import { SummaryCards } from "@/components/application/summary-cards";
@@ -55,6 +56,7 @@ export function AppShell({ lastRefresh }: { lastRefresh: string }) {
             <SummaryCards summary={dashboardSummary} />
             <IncidentStrip />
             <PublishingRunsTable runs={publishingRuns} />
+            <PcfOperationsPanel />
           </div>
         </main>
       </div>

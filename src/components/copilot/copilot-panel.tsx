@@ -78,8 +78,8 @@ export function CopilotPanel() {
             className={cn(
               "fixed z-50 flex overflow-hidden border border-border bg-surface shadow-2xl",
               "inset-0 rounded-none",
-              "sm:inset-y-4 sm:right-4 sm:left-auto sm:w-[min(820px,calc(100vw-2rem))] sm:rounded-2xl",
-              "md:w-[min(900px,calc(100vw-2rem))]"
+              "sm:inset-y-4 sm:right-4 sm:left-auto sm:w-[min(920px,calc(100vw-2rem))] sm:rounded-2xl",
+              "md:w-[min(960px,calc(100vw-2rem))]"
             )}
             initial={
               reduceMotion ? false : { opacity: 0, x: 24, scale: 0.98 }

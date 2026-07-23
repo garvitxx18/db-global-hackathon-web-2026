@@ -63,7 +63,7 @@ export function Sidebar() {
         <div className="flex h-14 items-center justify-between border-b border-sidebar-border px-3">
           <div className={cn("min-w-0", collapsed && "lg:hidden")}>
             <p className="truncate text-sm font-semibold tracking-tight text-white">
-              Fund Publishing
+              PCF Generation
             </p>
             <p className="truncate text-[11px] text-[color:var(--sidebar-muted)]">
               Operations Console
@@ -71,7 +71,7 @@ export function Sidebar() {
           </div>
           {collapsed ? (
             <span className="hidden text-xs font-semibold text-ai-accent lg:inline">
-              FP
+              PCF
             </span>
           ) : null}
           <Button

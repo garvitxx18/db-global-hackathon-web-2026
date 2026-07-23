@@ -3,10 +3,10 @@ export const PRODUCT_SHORT_NAME = "Agent10";
 export const PRODUCT_DESCRIPTION =
   "Business-aware incident intelligence for support, engineering, and operations.";
 
-export const APP_NAME = "Fund Publishing Operations";
-export const DASHBOARD_TITLE = "Fund Publishing Monitor";
+export const APP_NAME = "PCF Generation Operations";
+export const DASHBOARD_TITLE = "PCF Generation Monitor";
 export const DASHBOARD_SUBTITLE =
-  "Monitor PCF and NAV publication status across the current processing window.";
+  "Track Synthetic, Equity, and Multi Asset PCF calculation status across the current processing window.";
 
 export const PROCESSING_DATE = "23 Jul 2026";
 export const PROCESSING_DATE_ISO = "2026-07-23";
@@ -74,8 +74,8 @@ export const OPINION_ACK =
 
 export const SIDEBAR_ITEMS = [
   { id: "overview", label: "Overview", active: false },
-  { id: "fund-publishing", label: "Fund Publishing", active: true },
-  { id: "pcf-generation", label: "PCF Generation", active: false },
+  { id: "fund-publishing", label: "Fund Publishing", active: false },
+  { id: "pcf-generation", label: "PCF Generation", active: true },
   { id: "nav-validation", label: "NAV Validation", active: false },
   { id: "data-loads", label: "Data Loads", active: false },
   { id: "incidents", label: "Incidents", active: false },

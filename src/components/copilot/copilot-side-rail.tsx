@@ -84,20 +84,20 @@ function PluginLogo({ pluginId, name }: { pluginId: PluginId; name: string }) {
 
   if (logoSrc) {
     return (
-      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md">
+      <span className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-md">
         <Image
           src={logoSrc}
           alt={`${name} logo`}
-          width={28}
-          height={28}
-          className="size-7 object-contain"
+          width={24}
+          height={24}
+          className="size-6 object-contain"
         />
       </span>
     );
   }
 
   return (
-    <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-white text-slate-600 ring-1 ring-border">
+    <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-white text-slate-600 ring-1 ring-border">
       <FallbackIcon className="size-3.5" aria-hidden />
     </span>
   );
@@ -155,64 +155,80 @@ export function CopilotSideRail() {
     const dbBlocked = isDbPlugin(plugin.id);
 
     return (
-      <li key={plugin.id} className="px-3 py-3">
-        <div className="flex items-start gap-2.5">
+      <li key={plugin.id} className="px-3 py-2">
+        <div className="flex items-center gap-2.5">
           <PluginLogo pluginId={plugin.id} name={plugin.name} />
+
           <div className="min-w-0 flex-1">
-            <div className="flex items-baseline justify-between gap-2">
-              <p className="text-[13px] font-medium text-foreground">
-                {plugin.name}
-              </p>
-              <span
-                className={cn(
-                  "shrink-0 text-[11px] font-medium",
-                  pluginStatusTone(plugin)
-                )}
-              >
-                {pluginStatusLabel(plugin)}
-              </span>
-            </div>
+            <p className="truncate text-[12.5px] font-medium leading-4 text-foreground">
+              {plugin.name}
+            </p>
+            <p
+              className={cn(
+                "mt-0.5 truncate text-[10.5px] leading-4",
+                pluginStatusTone(plugin)
+              )}
+            >
+              {plugin.status === "pending"
+                ? `Pending · ${plugin.ownerTeam}`
+                : pluginStatusLabel(plugin)}
+            </p>
+          </div>
 
+          <div className="flex h-6 w-[72px] shrink-0 items-center">
             {plugin.status === "connected" ? (
-              <label className="mt-2 flex cursor-pointer items-center gap-2 text-[12px] text-muted-foreground">
-                <input
-                  type="checkbox"
-                  className="size-3.5 rounded border-border"
-                  checked={plugin.selected}
-                  onChange={() => togglePluginSelected(plugin.id)}
-                />
-                Use in answers
-              </label>
-            ) : null}
-
-            {plugin.status === "config_required" ? (
               <Button
                 type="button"
-                size="sm"
+                size="xs"
                 variant="outline"
-                className="mt-2 h-7 w-full bg-white text-xs"
-                onClick={() => requestPluginEnable(plugin.id)}
+                aria-pressed={plugin.selected}
+                title={
+                  plugin.selected
+                    ? "Selected for answers"
+                    : "Not used in answers"
+                }
+                className={cn(
+                  "h-6 w-full px-0 text-[10px] font-medium",
+                  plugin.selected &&
+                    "border-primary/30 bg-accent text-foreground"
+                )}
+                onClick={() => togglePluginSelected(plugin.id)}
               >
-                Request config
+                {plugin.selected ? "Using" : "Use"}
               </Button>
             ) : null}
 
-            {plugin.status === "available" ? (
+            {plugin.status === "config_required" ||
+            plugin.status === "available" ? (
               <Button
                 type="button"
-                size="sm"
-                variant={dbBlocked ? "outline" : "default"}
-                className="mt-2 h-7 w-full text-xs"
+                size="xs"
+                variant={
+                  plugin.status === "available" && !dbBlocked
+                    ? "default"
+                    : "outline"
+                }
+                className="h-6 w-full px-0 text-[10px] font-medium"
                 onClick={() => requestPluginEnable(plugin.id)}
               >
-                {dbBlocked ? "Connect" : "Enable"}
+                {plugin.status === "config_required"
+                  ? "Config"
+                  : dbBlocked
+                    ? "Connect"
+                    : "Enable"}
               </Button>
             ) : null}
 
             {plugin.status === "pending" ? (
-              <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-                Waiting on {plugin.ownerTeam}
-              </p>
+              <Button
+                type="button"
+                size="xs"
+                variant="outline"
+                disabled
+                className="h-6 w-full px-0 text-[10px] font-medium disabled:opacity-70"
+              >
+                Wait
+              </Button>
             ) : null}
           </div>
         </div>
@@ -221,7 +237,7 @@ export function CopilotSideRail() {
   }
 
   return (
-    <aside className="flex w-[200px] shrink-0 flex-col border-r border-border bg-slate-50/80 sm:w-[228px]">
+    <aside className="flex w-[260px] shrink-0 flex-col border-r border-border bg-slate-50/80 sm:w-[280px]">
       <div
         role="tablist"
         aria-label="Copilot side panels"
@@ -359,17 +375,17 @@ export function CopilotSideRail() {
 
       {sideTab === "plugins" ? (
         <div className="flex min-h-0 flex-1 flex-col" role="tabpanel">
-          <div className="space-y-1 border-b border-border px-3 py-3">
+          <div className="border-b border-border px-3 py-2.5">
             <p className="text-[13px] font-medium text-foreground">
               {connectedCount}/{totalPluginCount} plugins active
             </p>
-            <p className="text-[12px] text-muted-foreground">
+            <p className="mt-0.5 text-[11px] text-muted-foreground">
               {selectedCount} used for answers · Demo
             </p>
           </div>
 
           <div className="thin-scrollbar min-h-0 flex-1 overflow-y-auto">
-            <div className="px-3 pt-3">
+            <div className="px-3 pb-1 pt-2.5">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                 Active plugins
               </p>
@@ -378,12 +394,9 @@ export function CopilotSideRail() {
               {corePlugins.map(renderPluginRow)}
             </ul>
 
-            <div className="mt-1 border-t border-border px-3 pt-3">
+            <div className="mt-1 border-t border-border px-3 pb-1 pt-2.5">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                 DB services
-              </p>
-              <p className="mt-1 text-[11px] leading-snug text-muted-foreground">
-                Not connected in this demo environment.
               </p>
             </div>
             <ul className="divide-y divide-border/60 pb-3">

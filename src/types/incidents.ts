@@ -2,6 +2,14 @@ export type IncidentSeverity = "info" | "warning" | "critical";
 export type EvidenceKind = "log" | "api-response" | "runbook";
 export type PublishingStatus = "Published" | "Failed" | "In Progress";
 
+export type PcfCalculationStatus =
+  | "Queued"
+  | "Loading constituents"
+  | "Calculating basket"
+  | "Validating controls"
+  | "Published"
+  | "Failed";
+
 export interface EvidenceItem {
   id: string;
   kind: EvidenceKind;
@@ -38,11 +46,15 @@ export interface IncidentAnalysis {
 export interface PublishingRun {
   id: string;
   fundId: string;
+  fundName: string;
   process: string;
+  methodology: "Synthetic" | "Equity" | "Multi Asset";
   region: string;
   scheduled: string;
   completed: string | null;
   status: PublishingStatus;
+  calculationStatus: PcfCalculationStatus;
+  creationUnit: number;
   isDemoIncident?: boolean;
 }
 

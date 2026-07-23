@@ -15,7 +15,7 @@ export function TopBar({ lastRefresh }: { lastRefresh: string }) {
             <li aria-hidden className="text-border">
               /
             </li>
-            <li className="truncate font-medium text-foreground">Fund Publishing</li>
+            <li className="truncate font-medium text-foreground">PCF Generation</li>
           </ol>
         </nav>
       </div>
@@ -44,7 +44,7 @@ export function TopBar({ lastRefresh }: { lastRefresh: string }) {
           type="button"
           variant="ghost"
           size="icon-sm"
-          aria-label="Search funds and runs"
+          aria-label="Search PCFs and calculation runs"
         >
           <Search className="size-4" />
         </Button>
