@@ -1,0 +1,99 @@
+export type ChatRole = "user" | "assistant";
+
+export type JiraDraftState = "idle" | "reviewing" | "created";
+
+export type FeedbackValue = "up" | "down" | null;
+
+export type CopilotSideTab = "chats" | "services" | "plugins";
+
+export type CollaborationMode = "idle" | "opinion" | "support" | "teams";
+
+export type ServiceHealth = "healthy" | "degraded" | "down";
+
+export type PluginId =
+  | "openshift"
+  | "gcp"
+  | "scribe"
+  | "confluence"
+  | "jira"
+  | "teams"
+  | "db-omni"
+  | "db-unity"
+  | "db-support-plus"
+  | "db-notifier";
+
+export type PluginStatus =
+  | "connected"
+  | "config_required"
+  | "available"
+  | "pending";
+
+export interface CopilotPlugin {
+  id: PluginId;
+  name: string;
+  description: string;
+  status: PluginStatus;
+  /** When true, this connected plugin contributes evidence to answers. */
+  selected: boolean;
+  thinkingStep: string;
+  ownerTeam: string;
+}
+
+export interface CopilotContext {
+  fundId?: string;
+  processingDate?: string;
+}
+
+export type ChatMessage =
+  | {
+      id: string;
+      role: "user";
+      content: string;
+      createdAt: string;
+    }
+  | {
+      id: string;
+      role: "assistant";
+      content?: string;
+      analysis?: import("./incidents").IncidentAnalysis;
+      affectedFunds?: import("./incidents").AffectedFund[];
+      createdAt: string;
+    };
+
+export interface ChatSession {
+  id: string;
+  incidentId: string;
+  title: string;
+  fundId?: string;
+  updatedAt: string;
+  status: "open" | "resolved" | "investigating";
+  messages: ChatMessage[];
+}
+
+export interface ConnectedService {
+  id: string;
+  name: string;
+  team: string;
+  podsRunning: number;
+  podsDesired: number;
+  health: ServiceHealth;
+  lastHeartbeat: string;
+}
+
+export interface ServiceStatusSummary {
+  totalServices: number;
+  healthyServices: number;
+  degradedServices: number;
+  totalPodsRunning: number;
+  totalPodsDesired: number;
+  services: ConnectedService[];
+}
+
+export interface AskCopilotOptions {
+  fundId?: string;
+  processingDate?: string;
+  selectedPlugins?: Array<{
+    id: PluginId;
+    name: string;
+  }>;
+}
