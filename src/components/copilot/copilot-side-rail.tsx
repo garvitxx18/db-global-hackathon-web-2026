@@ -4,7 +4,6 @@ import type { ComponentType } from "react";
 import Image from "next/image";
 import {
   Bell,
-  FileText,
   Headset,
   History,
   Plus,
@@ -75,12 +74,12 @@ const pluginLogoSrc: Partial<Record<PluginId, string>> = {
   jira: "/brand/plugins/jira.png",
   confluence: "/brand/plugins/confluence.png",
   openshift: "/brand/plugins/openshift.png",
+  scribe: "/brand/plugins/scribe.png",
 };
 
 const pluginFallbackIcons: Partial<
   Record<PluginId, ComponentType<{ className?: string }>>
 > = {
-  scribe: FileText,
   "db-omni": Waypoints,
   "db-unity": Shield,
   "db-support-plus": Headset,
@@ -89,11 +88,11 @@ const pluginFallbackIcons: Partial<
 
 function PluginLogo({ pluginId, name }: { pluginId: PluginId; name: string }) {
   const logoSrc = pluginLogoSrc[pluginId];
-  const FallbackIcon = pluginFallbackIcons[pluginId] ?? FileText;
+  const FallbackIcon = pluginFallbackIcons[pluginId] ?? Waypoints;
 
   if (logoSrc) {
     return (
-      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white">
+      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md">
         <Image
           src={logoSrc}
           alt={`${name} logo`}
