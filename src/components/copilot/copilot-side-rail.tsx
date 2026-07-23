@@ -1,10 +1,9 @@
 "use client";
 
 import type { ComponentType } from "react";
+import Image from "next/image";
 import {
   Bell,
-  Boxes,
-  Cloud,
   FileText,
   Headset,
   History,
@@ -12,8 +11,6 @@ import {
   Puzzle,
   Server,
   Shield,
-  Ticket,
-  Users,
   Waypoints,
 } from "lucide-react";
 import { isDbPlugin } from "@/data/plugins";
@@ -72,18 +69,48 @@ function healthLabel(health: ServiceHealth) {
   }
 }
 
-const pluginIcons: Record<PluginId, ComponentType<{ className?: string }>> = {
-  openshift: Boxes,
-  gcp: Cloud,
+const pluginLogoSrc: Partial<Record<PluginId, string>> = {
+  teams: "/brand/plugins/teams.png",
+  gcp: "/brand/plugins/gcp.png",
+  jira: "/brand/plugins/jira.png",
+  confluence: "/brand/plugins/confluence.png",
+  openshift: "/brand/plugins/openshift.png",
+};
+
+const pluginFallbackIcons: Partial<
+  Record<PluginId, ComponentType<{ className?: string }>>
+> = {
   scribe: FileText,
-  confluence: FileText,
-  jira: Ticket,
-  teams: Users,
   "db-omni": Waypoints,
   "db-unity": Shield,
   "db-support-plus": Headset,
   "db-notifier": Bell,
 };
+
+function PluginLogo({ pluginId, name }: { pluginId: PluginId; name: string }) {
+  const logoSrc = pluginLogoSrc[pluginId];
+  const FallbackIcon = pluginFallbackIcons[pluginId] ?? FileText;
+
+  if (logoSrc) {
+    return (
+      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white">
+        <Image
+          src={logoSrc}
+          alt={`${name} logo`}
+          width={28}
+          height={28}
+          className="size-7 object-contain"
+        />
+      </span>
+    );
+  }
+
+  return (
+    <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-white text-slate-600 ring-1 ring-border">
+      <FallbackIcon className="size-3.5" aria-hidden />
+    </span>
+  );
+}
 
 function pluginStatusLabel(plugin: CopilotPlugin) {
   switch (plugin.status) {
@@ -134,15 +161,12 @@ export function CopilotSideRail() {
   const dbPlugins = plugins.filter((plugin) => isDbPlugin(plugin.id));
 
   function renderPluginRow(plugin: CopilotPlugin) {
-    const Icon = pluginIcons[plugin.id];
     const dbBlocked = isDbPlugin(plugin.id);
 
     return (
       <li key={plugin.id} className="px-3 py-3">
         <div className="flex items-start gap-2.5">
-          <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-white text-slate-600 ring-1 ring-border">
-            <Icon className="size-3.5" aria-hidden />
-          </span>
+          <PluginLogo pluginId={plugin.id} name={plugin.name} />
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline justify-between gap-2">
               <p className="text-[13px] font-medium text-foreground">
