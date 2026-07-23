@@ -57,6 +57,10 @@ export type ChatMessage =
       content?: string;
       analysis?: import("./incidents").IncidentAnalysis;
       affectedFunds?: import("./incidents").AffectedFund[];
+      sources?: Array<{
+        id: PluginId;
+        name: string;
+      }>;
       createdAt: string;
     };
 

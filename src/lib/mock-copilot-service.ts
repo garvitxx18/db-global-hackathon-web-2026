@@ -47,16 +47,6 @@ function matchesOperationsNext(question: string): boolean {
   );
 }
 
-function sourcesNote(
-  selectedPlugins?: AskCopilotOptions["selectedPlugins"]
-): string {
-  if (!selectedPlugins || selectedPlugins.length === 0) {
-    return "Sources used: application publishing context only (no plugins selected).";
-  }
-  const names = selectedPlugins.map((plugin) => plugin.name).join(", ");
-  return `Sources used: ${names} (demo plugin evidence).`;
-}
-
 /**
  * Deterministic milestone-1 copilot service.
  * Keyword matching only — UI must not know how responses are produced.
@@ -71,14 +61,16 @@ export async function askCopilot(
 
   const createdAt = new Date().toISOString();
   const fundId = context?.fundId ?? DEMO_FUND_ID;
-  const sources = sourcesNote(context?.selectedPlugins);
+  const sources = context?.selectedPlugins ?? [];
 
   if (matchesAffectedFunds(question)) {
     return {
       id: createId("msg"),
       role: "assistant",
-      content: `Eight synthetic funds are blocked by the same Index Data Service constituent dependency.\n\n${sources}`,
+      content:
+        "Eight synthetic funds are blocked by the same Index Data Service constituent dependency.",
       affectedFunds,
+      sources,
       createdAt,
     };
   }
@@ -87,11 +79,12 @@ export async function askCopilot(
     return {
       id: createId("msg"),
       role: "assistant",
-      content: `${pcfIncidentAnalysis.summary}\n\n${sources}`,
+      content: pcfIncidentAnalysis.summary,
       analysis: {
         ...pcfIncidentAnalysis,
         fundId,
       },
+      sources,
       createdAt,
     };
   }
@@ -99,7 +92,8 @@ export async function askCopilot(
   return {
     id: createId("msg"),
     role: "assistant",
-    content: `${FALLBACK_RESPONSE}\n\n${sources}`,
+    content: FALLBACK_RESPONSE,
+    sources,
     createdAt,
   };
 }

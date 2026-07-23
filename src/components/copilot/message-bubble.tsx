@@ -1,6 +1,7 @@
 "use client";
 
 import type { ChatMessage } from "@/types/copilot";
+import { SourcesUsed } from "@/components/copilot/sources-used";
 import { cn } from "@/lib/utils";
 
 function TextBlock({ text }: { text: string }) {
@@ -9,6 +10,7 @@ function TextBlock({ text }: { text: string }) {
 
 export function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === "user";
+  const sources = message.role === "assistant" ? message.sources : undefined;
 
   return (
     <div
@@ -23,16 +25,17 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
         )}
       >
         {message.role === "assistant" && message.analysis ? (
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <TextBlock text={message.content ?? message.analysis.summary} />
             <p className="rounded-lg border border-dashed border-border bg-slate-50 px-2.5 py-2 text-xs text-muted-foreground">
               Full incident analysis cards (root cause, evidence, Jira draft)
               arrive in the next milestone. Summary and typed analysis payload
               are already available.
             </p>
+            {sources ? <SourcesUsed sources={sources} /> : null}
           </div>
         ) : message.role === "assistant" && message.affectedFunds ? (
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {message.content ? <TextBlock text={message.content} /> : null}
             <div className="overflow-hidden rounded-lg border border-border">
               <table className="w-full text-left text-xs">
@@ -56,10 +59,14 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
                 </tbody>
               </table>
             </div>
+            {sources ? <SourcesUsed sources={sources} /> : null}
           </div>
-        ) : message.content ? (
-          <TextBlock text={message.content} />
-        ) : null}
+        ) : (
+          <div className="space-y-2.5">
+            {message.content ? <TextBlock text={message.content} /> : null}
+            {sources ? <SourcesUsed sources={sources} /> : null}
+          </div>
+        )}
       </div>
     </div>
   );

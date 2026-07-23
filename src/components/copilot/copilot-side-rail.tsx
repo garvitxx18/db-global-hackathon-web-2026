@@ -13,6 +13,7 @@ import {
   Waypoints,
 } from "lucide-react";
 import { isDbPlugin } from "@/data/plugins";
+import { PLUGIN_LOGO_SRC } from "@/lib/plugin-logos";
 import { useCopilot } from "@/components/copilot/copilot-provider";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -68,15 +69,6 @@ function healthLabel(health: ServiceHealth) {
   }
 }
 
-const pluginLogoSrc: Partial<Record<PluginId, string>> = {
-  teams: "/brand/plugins/teams.png",
-  gcp: "/brand/plugins/gcp.png",
-  jira: "/brand/plugins/jira.png",
-  confluence: "/brand/plugins/confluence.png",
-  openshift: "/brand/plugins/openshift.png",
-  scribe: "/brand/plugins/scribe.png",
-};
-
 const pluginFallbackIcons: Partial<
   Record<PluginId, ComponentType<{ className?: string }>>
 > = {
@@ -87,7 +79,7 @@ const pluginFallbackIcons: Partial<
 };
 
 function PluginLogo({ pluginId, name }: { pluginId: PluginId; name: string }) {
-  const logoSrc = pluginLogoSrc[pluginId];
+  const logoSrc = PLUGIN_LOGO_SRC[pluginId];
   const FallbackIcon = pluginFallbackIcons[pluginId] ?? Waypoints;
 
   if (logoSrc) {
