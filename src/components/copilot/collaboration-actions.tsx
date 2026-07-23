@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Handshake, MessageSquarePlus, Users } from "lucide-react";
+import { Handshake, MessageSquarePlus, Phone, Users } from "lucide-react";
 import {
   SUPPORT_TEAM_NAME,
-  TEAMS_CHANNEL,
+  TEAMS_CALL_CONTACTS,
 } from "@/lib/constants";
 import { useCopilot } from "@/components/copilot/copilot-provider";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,9 @@ export function CollaborationActions() {
     isAnalyzing,
   } = useCopilot();
   const [text, setText] = useState("");
+  const [selectedContactId, setSelectedContactId] = useState<string>(
+    TEAMS_CALL_CONTACTS[0]?.id ?? ""
+  );
 
   function closePanel() {
     setText("");
@@ -36,6 +39,10 @@ export function CollaborationActions() {
     }
     setText("");
   }
+
+  const selectedContact =
+    TEAMS_CALL_CONTACTS.find((contact) => contact.id === selectedContactId) ??
+    TEAMS_CALL_CONTACTS[0];
 
   return (
     <div className="border-t border-border bg-slate-50/80 px-3 py-2">
@@ -130,16 +137,52 @@ export function CollaborationActions() {
             "mt-2 space-y-2 rounded-lg border border-border bg-surface p-2.5 shadow-sm"
           )}
         >
-          <p className="text-xs font-medium text-foreground">
-            Connect with support on Teams
-          </p>
-          <p className="text-[11px] text-muted-foreground">
-            Channel:{" "}
-            <span className="font-medium text-foreground">{TEAMS_CHANNEL}</span>
-            <span className="ml-1 rounded bg-slate-100 px-1 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600">
-              Demo
-            </span>
-          </p>
+          <div>
+            <p className="text-xs font-medium text-foreground">
+              Call a colleague on Teams
+            </p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">
+              Opens Microsoft Teams with a video call to the selected person.
+            </p>
+          </div>
+
+          <ul className="space-y-1">
+            {TEAMS_CALL_CONTACTS.map((contact) => {
+              const selected = contact.id === selectedContactId;
+              return (
+                <li key={contact.id}>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedContactId(contact.id)}
+                    className={cn(
+                      "flex w-full items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-colors",
+                      selected
+                        ? "border-primary/30 bg-accent"
+                        : "border-transparent hover:bg-slate-50"
+                    )}
+                    aria-pressed={selected}
+                  >
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-800 text-[10px] font-semibold text-white">
+                      {contact.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-xs font-medium text-foreground">
+                        {contact.name}
+                      </span>
+                      <span className="block truncate text-[11px] text-muted-foreground">
+                        {contact.role} · {contact.email}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
           <div className="flex items-center justify-end gap-1.5">
             <Button type="button" variant="ghost" size="xs" onClick={closePanel}>
               Cancel
@@ -147,11 +190,17 @@ export function CollaborationActions() {
             <Button
               type="button"
               size="xs"
+              disabled={!selectedContact}
               onClick={() => {
-                connectTeams();
+                if (!selectedContact) return;
+                connectTeams({
+                  name: selectedContact.name,
+                  email: selectedContact.email,
+                });
               }}
             >
-              Open Teams link
+              <Phone className="size-3" aria-hidden />
+              Start Teams call
             </Button>
           </div>
         </div>

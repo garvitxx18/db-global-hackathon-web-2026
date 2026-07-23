@@ -30,7 +30,7 @@ import {
   OPINION_ACK,
   PROCESSING_DATE,
   SUPPORT_AUTO_REPLY,
-  TEAMS_CONNECT_ACK,
+  buildTeamsCallUrl,
 } from "@/lib/constants";
 import type {
   ChatMessage,
@@ -82,7 +82,7 @@ interface CopilotContextValue {
   setCollaborationMode: (mode: CollaborationMode) => void;
   submitOpinion: (opinion: string) => void;
   askSupport: (question: string) => void;
-  connectTeams: () => void;
+  connectTeams: (contact: { name: string; email: string }) => void;
   togglePluginSelected: (pluginId: PluginId) => void;
   requestPluginEnable: (pluginId: PluginId) => void;
 }
@@ -406,10 +406,17 @@ export function CopilotProvider({
     [appendSystemStyleAssistant, updateActiveMessages]
   );
 
-  const connectTeams = useCallback(() => {
-    appendSystemStyleAssistant(TEAMS_CONNECT_ACK);
-    setCollaborationMode("idle");
-  }, [appendSystemStyleAssistant]);
+  const connectTeams = useCallback(
+    (contact: { name: string; email: string }) => {
+      const callUrl = buildTeamsCallUrl(contact.email, true);
+      window.open(callUrl, "_blank", "noopener,noreferrer");
+      appendSystemStyleAssistant(
+        `Opening a Microsoft Teams call with ${contact.name} (${contact.email}). If Teams does not open automatically, allow pop-ups or open the link from your browser.`
+      );
+      setCollaborationMode("idle");
+    },
+    [appendSystemStyleAssistant]
+  );
 
   const reviewJiraDraft = useCallback(() => {
     setJiraDraftState("reviewing");

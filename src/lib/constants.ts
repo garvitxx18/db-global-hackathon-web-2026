@@ -47,14 +47,30 @@ export const FALLBACK_RESPONSE =
 export const SUPPORT_TEAM_NAME = "ETF Operations Support";
 export const TEAMS_CHANNEL = "ETF Ops · Incident Bridge";
 
+/** Colleagues available for one-click Teams calls from Agent10. */
+export const TEAMS_CALL_CONTACTS = [
+  {
+    id: "sravan",
+    name: "Sravan Kumar Majjiga",
+    email:
+      "sravankumarmajjiga.gmail.com@dbaihackathon2026outlook.onmicrosoft.com",
+    role: "Hackathon teammate",
+  },
+] as const;
+
+export function buildTeamsCallUrl(email: string, withVideo = true): string {
+  const params = new URLSearchParams({
+    users: email,
+    ...(withVideo ? { withVideo: "true" } : {}),
+  });
+  return `https://teams.microsoft.com/l/call/0/0?${params.toString()}`;
+}
+
 export const SUPPORT_AUTO_REPLY =
   "Thanks — your question was routed to ETF Operations Support (demo). A specialist typically responds within 15 minutes during market hours.";
 
 export const OPINION_ACK =
   "Thanks for the opinion. It has been attached to this incident thread for the support and engineering review (demo only).";
-
-export const TEAMS_CONNECT_ACK =
-  "Demo: Teams deep-link prepared for ETF Ops · Incident Bridge. No live Teams session was opened.";
 
 export const SIDEBAR_ITEMS = [
   { id: "overview", label: "Overview", active: false },
