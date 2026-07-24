@@ -54,9 +54,11 @@ export const TEAMS_CALL_CONTACTS = [
     name: "Sravan Kumar Majjiga",
     email:
       "sravankumarmajjiga.gmail.com@dbaihackathon2026outlook.onmicrosoft.com",
-    role: "Hackathon teammate",
+    role: "Support team",
   },
 ] as const;
+
+export const SUPPORT_CONTACT = TEAMS_CALL_CONTACTS[0];
 
 export function buildTeamsCallUrl(email: string, withVideo = true): string {
   const params = new URLSearchParams({
@@ -66,8 +68,12 @@ export function buildTeamsCallUrl(email: string, withVideo = true): string {
   return `https://teams.microsoft.com/l/call/0/0?${params.toString()}`;
 }
 
-export const SUPPORT_AUTO_REPLY =
-  "Thanks — your question was routed to ETF Operations Support. A specialist typically responds within 15 minutes during market hours.";
+export const SUPPORT_SUBMITTED_ACK =
+  "Support request submitted. Your question was routed to ETF Operations Support — a specialist typically responds within 15 minutes during market hours.";
+
+export const SUPPORT_AVAILABLE_OFFER = `${SUPPORT_CONTACT.name} from the Support team is available to connect right now. Take this in a Teams call to walk through the incident live.`;
+
+export const SUPPORT_OFFER_DELAY_MS = 2800;
 
 export const OPINION_ACK =
   "Thanks for the opinion. It has been attached to this incident thread for the support and engineering review.";

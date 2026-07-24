@@ -6,7 +6,7 @@ export type FeedbackValue = "up" | "down" | null;
 
 export type CopilotSideTab = "chats" | "services" | "plugins";
 
-export type CollaborationMode = "idle" | "opinion" | "support" | "teams";
+export type CollaborationMode = "idle" | "opinion" | "support";
 
 export type ServiceHealth = "healthy" | "degraded" | "down";
 
@@ -57,13 +57,18 @@ export type ChatMessage =
       id: string;
       role: "assistant";
       content?: string;
-      kind?: "message" | "ack";
+      kind?: "message" | "ack" | "support-offer";
       analysis?: import("./incidents").IncidentAnalysis;
       affectedFunds?: import("./incidents").AffectedFund[];
       sources?: Array<{
         id: PluginId;
         name: string;
       }>;
+      callContact?: {
+        name: string;
+        email: string;
+        role: string;
+      };
       createdAt: string;
     };
 

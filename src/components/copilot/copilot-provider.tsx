@@ -29,7 +29,10 @@ import {
   INITIAL_ASSISTANT_MESSAGE,
   OPINION_ACK,
   PROCESSING_DATE,
-  SUPPORT_AUTO_REPLY,
+  SUPPORT_AVAILABLE_OFFER,
+  SUPPORT_CONTACT,
+  SUPPORT_OFFER_DELAY_MS,
+  SUPPORT_SUBMITTED_ACK,
   buildTeamsCallUrl,
 } from "@/lib/constants";
 import type {
@@ -395,6 +398,7 @@ export function CopilotProvider({
     (question: string) => {
       const trimmed = question.trim();
       if (!trimmed) return;
+
       const userMessage: ChatMessage = {
         id: `msg-support-${Date.now()}`,
         role: "user",
@@ -402,9 +406,26 @@ export function CopilotProvider({
         content: trimmed,
         createdAt: new Date().toISOString(),
       };
+
       updateActiveMessages((prev) => [...prev, userMessage]);
-      appendSystemStyleAssistant(SUPPORT_AUTO_REPLY);
+      appendSystemStyleAssistant(SUPPORT_SUBMITTED_ACK);
       setCollaborationMode("idle");
+
+      window.setTimeout(() => {
+        const offerMessage: ChatMessage = {
+          id: `msg-support-offer-${Date.now()}`,
+          role: "assistant",
+          kind: "support-offer",
+          content: SUPPORT_AVAILABLE_OFFER,
+          callContact: {
+            name: SUPPORT_CONTACT.name,
+            email: SUPPORT_CONTACT.email,
+            role: SUPPORT_CONTACT.role,
+          },
+          createdAt: new Date().toISOString(),
+        };
+        updateActiveMessages((prev) => [...prev, offerMessage]);
+      }, SUPPORT_OFFER_DELAY_MS);
     },
     [appendSystemStyleAssistant, updateActiveMessages]
   );
@@ -427,7 +448,10 @@ export function CopilotProvider({
 
   const confirmDemoJira = useCallback(() => {
     setJiraDraftState("created");
-  }, []);
+    appendSystemStyleAssistant(
+      "Jira defect BUG-1042 created for PCF Calculation Team — Handle missing security details in PCF calculation (High, 3 pts)."
+    );
+  }, [appendSystemStyleAssistant]);
 
   const cancelJiraReview = useCallback(() => {
     setJiraDraftState("idle");

@@ -9,6 +9,7 @@ import { CopilotSideRail } from "@/components/copilot/copilot-side-rail";
 import { Conversation } from "@/components/copilot/conversation";
 import { CollaborationActions } from "@/components/copilot/collaboration-actions";
 import { ChatComposer } from "@/components/copilot/chat-composer";
+import { JiraDefectSheet } from "@/components/copilot/jira-defect-sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,7 @@ export function CopilotPanel() {
     jiraDraftState,
     collaborationMode,
     setCollaborationMode,
+    cancelJiraReview,
   } = useCopilot();
   const reduceMotion = useReducedMotion();
   const [mobileRailOpen, setMobileRailOpen] = useState(false);
@@ -28,7 +30,10 @@ export function CopilotPanel() {
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
-      if (jiraDraftState === "reviewing") return;
+      if (jiraDraftState === "reviewing") {
+        cancelJiraReview();
+        return;
+      }
       if (collaborationMode !== "idle") {
         setCollaborationMode("idle");
         return;
@@ -49,6 +54,7 @@ export function CopilotPanel() {
     jiraDraftState,
     collaborationMode,
     setCollaborationMode,
+    cancelJiraReview,
     mobileRailOpen,
   ]);
 
@@ -132,6 +138,7 @@ export function CopilotPanel() {
               <Conversation />
               <CollaborationActions />
               <ChatComposer />
+              <JiraDefectSheet />
             </div>
           </motion.aside>
         </>
