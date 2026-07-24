@@ -17,10 +17,10 @@ export type PluginId =
   | "confluence"
   | "jira"
   | "teams"
-  | "db-omni"
+  | "github"
+  | "new-relic"
   | "db-unity"
-  | "db-support-plus"
-  | "db-notifier";
+  | "db-support-plus";
 
 export type PluginStatus =
   | "connected"

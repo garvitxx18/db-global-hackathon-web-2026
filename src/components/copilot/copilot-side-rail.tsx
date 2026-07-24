@@ -3,7 +3,6 @@
 import type { ComponentType } from "react";
 import Image from "next/image";
 import {
-  Bell,
   Headset,
   History,
   Plus,
@@ -72,10 +71,8 @@ function healthLabel(health: ServiceHealth) {
 const pluginFallbackIcons: Partial<
   Record<PluginId, ComponentType<{ className?: string }>>
 > = {
-  "db-omni": Waypoints,
   "db-unity": Shield,
   "db-support-plus": Headset,
-  "db-notifier": Bell,
 };
 
 function PluginLogo({ pluginId, name }: { pluginId: PluginId; name: string }) {

@@ -51,10 +51,10 @@ function isPluginId(value: string): value is PluginId {
     "confluence",
     "jira",
     "teams",
-    "db-omni",
+    "github",
+    "new-relic",
     "db-unity",
     "db-support-plus",
-    "db-notifier",
   ].includes(value);
 }
 

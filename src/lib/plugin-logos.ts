@@ -7,6 +7,8 @@ export const PLUGIN_LOGO_SRC: Partial<Record<PluginId, string>> = {
   confluence: "/brand/plugins/confluence.png",
   openshift: "/brand/plugins/openshift.png",
   scribe: "/brand/plugins/scribe.png",
+  github: "/brand/plugins/github.png",
+  "new-relic": "/brand/plugins/new-relic.png",
 };
 
 export function getPluginLogoSrc(pluginId: PluginId): string | undefined {

@@ -1,21 +1,16 @@
 import type { CopilotPlugin, PluginId } from "@/types/copilot";
 
-export const DB_PLUGIN_IDS: PluginId[] = [
-  "db-omni",
-  "db-unity",
-  "db-support-plus",
-  "db-notifier",
-];
+export const DB_PLUGIN_IDS: PluginId[] = ["db-unity", "db-support-plus"];
 
 export function isDbPlugin(pluginId: PluginId): boolean {
   return DB_PLUGIN_IDS.includes(pluginId);
 }
 
 /**
- * Demo plugin states:
- * - Confluence, GCP, Jira: connected
- * - OpenShift: off
- * - DB suite plugins: off, listed last
+ * Plugin states:
+ * - Jira, Confluence, GCP, GitHub: connected
+ * - OpenShift, Teams, Scribe, New Relic: available
+ * - DB suite plugins: listed last, blocked until DB suite connects
  */
 export const initialPlugins: CopilotPlugin[] = [
   {
@@ -46,6 +41,15 @@ export const initialPlugins: CopilotPlugin[] = [
     ownerTeam: "Cloud Platform",
   },
   {
+    id: "github",
+    name: "GitHub",
+    description: "Repos, pipelines, and recent code changes",
+    status: "connected",
+    selected: true,
+    thinkingStep: "Reviewing GitHub commits and CI for related services",
+    ownerTeam: "PCF Calculation Team",
+  },
+  {
     id: "openshift",
     name: "OpenShift",
     description: "Pod events, deployments, and cluster health",
@@ -73,12 +77,12 @@ export const initialPlugins: CopilotPlugin[] = [
     ownerTeam: "Knowledge Management",
   },
   {
-    id: "db-omni",
-    name: "dbOmni",
-    description: "Enterprise observability and trace correlation",
+    id: "new-relic",
+    name: "New Relic",
+    description: "APM traces, errors, and service health signals",
     status: "available",
     selected: false,
-    thinkingStep: "Correlating traces in dbOmni for PCF calculation",
+    thinkingStep: "Checking New Relic APM and error traces",
     ownerTeam: "Observability",
   },
   {
@@ -99,15 +103,6 @@ export const initialPlugins: CopilotPlugin[] = [
     thinkingStep: "Checking dbSupportPlus cases linked to this fund",
     ownerTeam: "Client Support",
   },
-  {
-    id: "db-notifier",
-    name: "dbNotifier",
-    description: "Ops alerts, paging, and notification history",
-    status: "available",
-    selected: false,
-    thinkingStep: "Reviewing dbNotifier alerts for the publishing window",
-    ownerTeam: "Platform Ops",
-  },
 ];
 
 export const PLUGIN_ENABLE_REQUEST_ACK =
@@ -117,4 +112,4 @@ export const PLUGIN_CONFIG_REQUIRED_MSG =
   "Configuration is required before this plugin can connect. Send the connection details to the owning team to continue.";
 
 export const DB_SERVICES_NOT_CONNECTED_MSG =
-  "DB services are not connected. Connect the Deutsche Bank service suite before enabling dbOmni, dbUnity, dbSupportPlus, or dbNotifier.";
+  "DB services are not connected. Connect the Deutsche Bank service suite before enabling dbUnity or dbSupportPlus.";
