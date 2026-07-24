@@ -3,6 +3,7 @@
 import { Bug, Handshake, Lightbulb, MessageSquareText, Phone } from "lucide-react";
 import type { ChatMessage } from "@/types/copilot";
 import { MarkdownContent } from "@/components/copilot/markdown-content";
+import { NullPointerLogSnippet } from "@/components/copilot/null-pointer-log-snippet";
 import { SourcesUsed } from "@/components/copilot/sources-used";
 import { useCopilot } from "@/components/copilot/copilot-provider";
 import { Button } from "@/components/ui/button";
@@ -209,21 +210,26 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
             {sources ? <SourcesUsed sources={sources} /> : null}
 
             {showRaiseDefect ? (
-              <div className="flex items-center justify-between gap-2 border-t border-border/70 pt-2">
-                <p className="text-[10px] leading-snug text-muted-foreground">
-                  NullPointerException detected in analysis
-                </p>
-                <Button
-                  type="button"
-                  size="xs"
-                  variant="outline"
-                  className="h-6 shrink-0 gap-1 px-2 text-[10px]"
-                  disabled={defectAlreadyCreated}
-                  onClick={reviewJiraDraft}
-                >
-                  <Bug className="size-3" aria-hidden />
-                  {defectAlreadyCreated ? "Defect raised" : "Raise defect in Jira"}
-                </Button>
+              <div className="space-y-2 border-t border-border/70 pt-2">
+                <NullPointerLogSnippet />
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-[10px] leading-snug text-muted-foreground">
+                    NullPointerException detected in logs
+                  </p>
+                  <Button
+                    type="button"
+                    size="xs"
+                    variant="outline"
+                    className="h-6 shrink-0 gap-1 px-2 text-[10px]"
+                    disabled={defectAlreadyCreated}
+                    onClick={reviewJiraDraft}
+                  >
+                    <Bug className="size-3" aria-hidden />
+                    {defectAlreadyCreated
+                      ? "Defect raised"
+                      : "Raise defect in Jira"}
+                  </Button>
+                </div>
               </div>
             ) : null}
           </div>
