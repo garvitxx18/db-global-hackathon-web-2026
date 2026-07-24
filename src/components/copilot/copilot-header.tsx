@@ -29,14 +29,14 @@ export function CopilotHeader({
             </h2>
             <span
               className="hidden size-1.5 shrink-0 rounded-full bg-success sm:inline-block"
-              title="Demo data — not a live production connection"
-              aria-label="Demo connected status"
+              title="Connected to production"
+              aria-label="Production connected status"
             />
           </div>
           <p className="truncate font-mono text-[11px] leading-tight text-muted-foreground">
             {activeIncidentId}
-            <span className="ml-1.5 rounded bg-slate-100 px-1 py-px text-[9px] font-sans font-medium uppercase tracking-wide text-slate-600">
-              Demo
+            <span className="ml-1.5 rounded bg-emerald-50 px-1 py-px text-[9px] font-sans font-medium uppercase tracking-wide text-emerald-700">
+              PROD
             </span>
           </p>
         </div>

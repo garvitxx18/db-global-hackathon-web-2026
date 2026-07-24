@@ -94,13 +94,13 @@ function createWelcomeMessage(): ChatMessage {
     id: "msg-initial",
     role: "assistant",
     content: INITIAL_ASSISTANT_MESSAGE,
-    createdAt: "2026-07-23T19:05:00.000Z",
+    createdAt: "2026-07-24T09:35:00.000Z",
   };
 }
 
 function nextIncidentId(existing: ChatSession[]): string {
   const seq = String(existing.length + 1).padStart(3, "0");
-  return `INC-PCF-240723-${seq}`;
+  return `INC-PCF-240724-${seq}`;
 }
 
 export function CopilotProvider({

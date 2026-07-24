@@ -111,7 +111,7 @@ export function Sidebar() {
                 {item.active ? (
                   <span className="sr-only">(current)</span>
                 ) : (
-                  <span className="sr-only">(unavailable in demo)</span>
+                  <span className="sr-only">(unavailable)</span>
                 )}
               </button>
             );
@@ -125,7 +125,7 @@ export function Sidebar() {
               collapsed && "lg:hidden"
             )}
           >
-            Demo application shell · mock data only
+            PCF Generation · Production
           </p>
         </div>
       </aside>

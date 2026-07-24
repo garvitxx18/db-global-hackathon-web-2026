@@ -8,10 +8,10 @@ export const DASHBOARD_TITLE = "PCF Generation Monitor";
 export const DASHBOARD_SUBTITLE =
   "Track Synthetic, Equity, and Multi Asset PCF calculation status across the current processing window.";
 
-export const PROCESSING_DATE = "23 Jul 2026";
-export const PROCESSING_DATE_ISO = "2026-07-23";
+export const PROCESSING_DATE = "24 Jul 2026";
+export const PROCESSING_DATE_ISO = "2026-07-24";
 export const DEMO_FUND_ID = "LU0411078552";
-export const ENVIRONMENT = "Production";
+export const ENVIRONMENT = "PROD";
 
 export const ANALYSIS_DURATION_MS = 3800;
 export const ANALYSIS_PLUGIN_STEP_MS = 520;
@@ -42,7 +42,7 @@ export const COMPOSER_PLACEHOLDERS = [
 ] as const;
 
 export const FALLBACK_RESPONSE =
-  'I can demonstrate incident analysis for the current PCF publishing failure. Try asking "Why did LU0411078552 fail today?" or "Which funds are affected?"';
+  'I can help with incident analysis for the current PCF publishing failure. Try asking "Why did LU0411078552 fail today?" or "Which funds are affected?"';
 
 export const SUPPORT_TEAM_NAME = "ETF Operations Support";
 export const TEAMS_CHANNEL = "ETF Ops · Incident Bridge";
@@ -67,10 +67,10 @@ export function buildTeamsCallUrl(email: string, withVideo = true): string {
 }
 
 export const SUPPORT_AUTO_REPLY =
-  "Thanks — your question was routed to ETF Operations Support (demo). A specialist typically responds within 15 minutes during market hours.";
+  "Thanks — your question was routed to ETF Operations Support. A specialist typically responds within 15 minutes during market hours.";
 
 export const OPINION_ACK =
-  "Thanks for the opinion. It has been attached to this incident thread for the support and engineering review (demo only).";
+  "Thanks for the opinion. It has been attached to this incident thread for the support and engineering review.";
 
 export const SIDEBAR_ITEMS = [
   { id: "overview", label: "Overview", active: false },

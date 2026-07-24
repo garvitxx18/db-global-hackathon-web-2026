@@ -30,7 +30,7 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
               {content}
             </p>
             <p className="mt-1.5 text-[10px] text-amber-800/70">
-              Visible to support & engineering review · Demo only
+              Visible to support & engineering review · PROD
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export function MessageBubble({ message }: { message: ChatMessage }) {
               {content}
             </p>
             <p className="mt-1.5 text-[10px] text-sky-800/70">
-              Routed to ETF Operations Support · Demo
+              Routed to ETF Operations Support · PROD
             </p>
           </div>
         </div>

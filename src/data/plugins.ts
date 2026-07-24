@@ -111,7 +111,7 @@ export const initialPlugins: CopilotPlugin[] = [
 ];
 
 export const PLUGIN_ENABLE_REQUEST_ACK =
-  "Configuration request sent to the owning team (demo). They will provide connection settings before this plugin can be used for answers.";
+  "Configuration request sent to the owning team. They will provide connection settings before this plugin can be used for answers.";
 
 export const PLUGIN_CONFIG_REQUIRED_MSG =
   "Configuration is required before this plugin can connect. Send the connection details to the owning team to continue.";

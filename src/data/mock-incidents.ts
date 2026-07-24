@@ -2,7 +2,7 @@ import type { IncidentAnalysis } from "@/types/incidents";
 import { DEMO_FUND_ID, PROCESSING_DATE_ISO } from "@/lib/constants";
 
 export const pcfIncidentAnalysis: IncidentAnalysis = {
-  incidentId: "inc-pcf-2026-07-23-001",
+  incidentId: "inc-pcf-2026-07-24-001",
   fundId: DEMO_FUND_ID,
   summary:
     "LU0411078552 failed because Index Data Service returned an empty constituent set. The PCF Calculation Engine stopped validation at 09:32 UTC, so the synthetic fund basket could not be generated or published.",
@@ -29,9 +29,9 @@ export const pcfIncidentAnalysis: IncidentAnalysis = {
       kind: "log",
       title: "PCF Calculation Engine error",
       source: "pcf-calculation-engine",
-      timestamp: "2026-07-23T09:32:14.118Z",
+      timestamp: "2026-07-24T09:32:14.118Z",
       language: "text",
-      content: `2026-07-23T09:32:14.118Z ERROR pcf-calculation-engine
+      content: `2026-07-24T09:32:14.118Z ERROR pcf-calculation-engine
 NullPointerException: securityDetails is null
 at PcfCalculationService.calculate(PcfCalculationService.java:219)
 correlationId=pcf-7d92a1 fundId=LU0411078552`,
@@ -41,7 +41,7 @@ correlationId=pcf-7d92a1 fundId=LU0411078552`,
       kind: "api-response",
       title: "Dependency response",
       source: "index-data-service",
-      timestamp: "2026-07-23T09:32:13.901Z",
+      timestamp: "2026-07-24T09:32:13.901Z",
       language: "json",
       content: JSON.stringify(
         {
@@ -58,7 +58,7 @@ correlationId=pcf-7d92a1 fundId=LU0411078552`,
       kind: "runbook",
       title: "Synthetic PCF Failure Recovery",
       source: "Synthetic PCF Failure Recovery",
-      timestamp: "2026-07-23T09:32:14.118Z",
+      timestamp: "2026-07-24T09:32:14.118Z",
       language: "text",
       content:
         "relevant rule: Do not run PCF calculation before constituent-load completion",

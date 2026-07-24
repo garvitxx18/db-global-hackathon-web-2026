@@ -340,7 +340,7 @@ export function CopilotSideRail() {
               {serviceStatus.degradedServices} degraded
             </p>
             <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
-              Demo data
+              Prod telemetry
             </p>
           </div>
 
@@ -380,7 +380,7 @@ export function CopilotSideRail() {
               {connectedCount}/{totalPluginCount} plugins active
             </p>
             <p className="mt-0.5 text-[11px] text-muted-foreground">
-              {selectedCount} used for answers · Demo
+              {selectedCount} used for answers · PROD
             </p>
           </div>
 

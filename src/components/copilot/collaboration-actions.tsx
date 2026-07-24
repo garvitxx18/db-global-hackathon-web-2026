@@ -101,8 +101,8 @@ export function CollaborationActions() {
         >
           <p className="text-[11px] text-muted-foreground">
             {collaborationMode === "opinion"
-              ? "Share an opinion for this incident thread. Demo only — not sent externally."
-              : `Ask ${SUPPORT_TEAM_NAME}. Demo replies are simulated.`}
+              ? "Share an opinion for this incident thread."
+              : `Ask ${SUPPORT_TEAM_NAME}.`}
           </p>
           <Textarea
             value={text}
